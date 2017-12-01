@@ -1,13 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion 26
 
     defaultConfig {
         applicationId "com.zebra.scannercontrol.app"
         minSdkVersion 19
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 104
         versionName "2.1.4.0"
 		if (project.hasProperty('ADD_BUILD_TO_VERSION')) {
@@ -33,8 +32,11 @@ android {
 				signingConfig signingConfigs.release
 			}
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationVariants.all { variant ->
-                appendVersionName(variant, defaultConfig)
+
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "${variant.name}-${variant.versionName}.apk"
+                }
             }
         }
     }
@@ -45,8 +47,9 @@ android {
         abortOnError false
     }
 }
-def appendVersionName(variant, defaultConfig) {
-    variant.outputs.each { output ->
+
+static def appendVersionName(variant, defaultConfig) {
+    variant.outputs.all { output ->
         if (output.zipAlign) {
             def file = output.outputFile
             def fileName = file.name.replace("scannercontrol-release.apk", "scanner_control_app_v" + defaultConfig.versionName  + ".apk")
@@ -61,7 +64,7 @@ def appendVersionName(variant, defaultConfig) {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:design:25.2.0'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
     compile project(':BarcodeScannerLibrary')
 }
