@@ -1,3 +1,54 @@
+# Eclipse
+.metadata
+.classpath
+.project
+.settings
+.factorypath
+.checkstyle
+.externalToolBuilders
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/dictionaries
+.idea/libraries
+
+# Netbeans
+nb-configuration.xml
+
+# Build
+**/target/
+**/uml/
+**/coverage/
+**/dist/
+**/npm/
+**/libs/
+test-output
+
+# Misc.
+.DS_Store
+
+# Angular
+node_modules
+jspm_packages
+npm-debug.log
+debug.log
+src/**/*.js
+!src/systemjs.config.extras.js
+!src/systemjs.config.js
+!src/systemjs-angular-loader.js
+*.js.map
+e2e/**/*.js
+e2e/**/*.js.map
+_test-output
+_temp
+
+# Android gitignore
 # Built application files
 *.apk
 *.ap_
@@ -32,16 +83,9 @@ proguard/
 # Android Studio captures folder
 captures/
 
-# Intellij
-*.iml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/dictionaries
-.idea/libraries
-
 # Keystore files
-*.jks
+# Uncomment the following line if you do not want to check your keystore files in.
+#*.jks
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
