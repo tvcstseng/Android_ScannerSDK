@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BarcodeScannerLibrary/BarcodeScannerLibrary.iml" filepath="$PROJECT_DIR$/BarcodeScannerLibrary/BarcodeScannerLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android_scanner_sdk_demo_v2.1.4.0_src.iml" filepath="$PROJECT_DIR$/android_scanner_sdk_demo_v2.1.4.0_src.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scannercontrol/scannercontrol.iml" filepath="$PROJECT_DIR$/scannercontrol/scannercontrol.iml" />
+    </modules>
+  </component>
+</project>

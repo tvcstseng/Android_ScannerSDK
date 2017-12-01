@@ -1,0 +1,67 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
+
+    defaultConfig {
+        applicationId "com.zebra.scannercontrol.app"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 104
+        versionName "2.1.4.0"
+		if (project.hasProperty('ADD_BUILD_TO_VERSION')) {
+			versionName = versionName.substring(0,versionName.lastIndexOf(".") + 1) + (System.getenv("BUILD_NUMBER") ?: "0")
+		}
+    }
+	
+	signingConfigs {
+        release {
+            storeFile file("../../../keys/AndroidScannerSDK.keystore")
+            if (project.hasProperty('RELEASE_STORE_PASSWORD')) {
+                storePassword RELEASE_STORE_PASSWORD
+                keyAlias RELEASE_KEY_ALIAS
+                keyPassword RELEASE_KEY_PASSWORD
+            }
+        }
+	}
+	
+    buildTypes {
+        release {
+            minifyEnabled false
+			if (project.hasProperty('RELEASE_STORE_PASSWORD')) {
+				signingConfig signingConfigs.release
+			}
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                appendVersionName(variant, defaultConfig)
+            }
+        }
+    }
+
+    lintOptions {
+        // Don't abort if Lint finds an error, otherwise the Jenkins build
+        // will be marked as failed, and Jenkins won't analyse the Lint output
+        abortOnError false
+    }
+}
+def appendVersionName(variant, defaultConfig) {
+    variant.outputs.each { output ->
+        if (output.zipAlign) {
+            def file = output.outputFile
+            def fileName = file.name.replace("scannercontrol-release.apk", "scanner_control_app_v" + defaultConfig.versionName  + ".apk")
+            output.outputFile = new File(file.parent, fileName)
+        }
+
+        def file = output.packageApplication.outputFile
+        def fileName = file.name.replace("scannercontrol-release", "scanner_control_app_v" + defaultConfig.versionName + ".apk")
+        output.packageApplication.outputFile = new File(file.parent, fileName)
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:design:25.2.0'
+    compile project(':BarcodeScannerLibrary')
+}
